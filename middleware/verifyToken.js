@@ -1,7 +1,7 @@
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const verifyToken = (req, res, next) => {
-    console.log("Header received:", authHeader);
+    const authHeader = req.headers.token;
     console.log(authHeader);
     if (authHeader) {
         const token=authHeader.split(" ")[1];
@@ -26,6 +26,7 @@ const verifyAndAuthorization = (req, res, next) => {
         } else {
             // In verifyAndAuthorization
 res.status(403).json("verifyAndAuthorization: Not allowed");
+
         }
     });
 };
