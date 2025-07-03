@@ -2,27 +2,60 @@ const User = require("../models/User");
 const CryptoJS = require("crypto-js");
 
 module.exports = {
+  // updateUser: async (req, res) => {
+  //   if (req.body.password) {
+  //     req.body.password = CryptoJS.AES.encrypt(
+  //       req.body.password,
+  //       process.env.JWT_SEC
+  //     ).toString();
+  //   }
+  //   try {
+  //     const UpdatedUser = await User.findByIdAndUpdate(
+  //       req.user.id,
+  //       {
+  //         $set: req.body,
+  //       },
+  //       { new: true }
+  //     );
+  //     const { password, __v, createdAt, ...others } = UpdatedUser._doc;
+  //     res.status(200).json({ ...others}); // No spread here
+  //   } catch (err) {
+  //     res.status(500).json(err);
+  //   }
+  // },
   updateUser: async (req, res) => {
-    if (req.body.password) {
-      req.body.password = CryptoJS.AES.encrypt(
-        req.body.password,
-        process.env.JWT_SEC
-      ).toString();
+  console.log("🚀 Reached updateUser controller");
+  console.log("Body received:", req.body);
+  console.log("User ID from token:", req.user.id);
+
+  if (req.body.password) {
+    req.body.password = CryptoJS.AES.encrypt(
+      req.body.password,
+      process.env.JWT_SEC
+    ).toString();
+  }
+
+  try {
+    const UpdatedUser = await User.findByIdAndUpdate(
+      req.user.id,
+      { $set: req.body },
+      { new: true }
+    );
+
+    if (!UpdatedUser) {
+      return res.status(404).json({ error: "User not found" });
     }
-    try {
-      const UpdatedUser = await User.findByIdAndUpdate(
-        req.user.id,
-        {
-          $set: req.body,
-        },
-        { new: true }
-      );
-      const { password, __v, createdAt, ...others } = UpdatedUser._doc;
-      res.status(200).json({ ...others}); // No spread here
-    } catch (err) {
-      res.status(500).json(err);
-    }
-  },
+
+    const { password, __v, createdAt, ...others } = UpdatedUser._doc;
+    console.log("✅ Updated user:", others);
+    res.status(200).json(others);
+
+  } catch (err) {
+    console.error("❌ Error updating user:", err.message);
+    res.status(500).json({ error: "Internal server error" });
+  }
+},
+
 
   deleteUser: async(req, res)=>{
     try{

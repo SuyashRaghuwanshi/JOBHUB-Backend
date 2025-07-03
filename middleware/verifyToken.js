@@ -1,11 +1,11 @@
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const verifyToken = (req, res, next) => {
-    const authHeader = req.headers.token;
+    console.log("Header received:", authHeader);
     console.log(authHeader);
     if (authHeader) {
         const token=authHeader.split(" ")[1];
-        console.log("Token:",token);
+        console.log("Extracted token:", token);
         jwt.verify(token, process.env.JWT_SEC, async (err, user) => {
             if(err) {
                 console.log("JWT_SECRET used for verify:", process.env.JWT_SEC);
@@ -21,20 +21,22 @@ const verifyToken = (req, res, next) => {
 };
 const verifyAndAuthorization = (req, res, next) => {
     verifyToken(req, res, () => {
-        if (req.user.id === req.params.id) {
+        if (req.user.id) {
             next();
         } else {
-            res.status(403).json("You are not allowed to do that!");
+            // In verifyAndAuthorization
+res.status(403).json("verifyAndAuthorization: Not allowed");
         }
-    })
+    });
 };
+
 //CHeck this out later as it is giving opposite answer
 const verifyAndAdmin = (req, res, next) => {
     verifyToken(req, res, () => {
-        if (!req.params.isAdmin) {
+        if (req.user.isAdmin) {
             next();
         } else {
-            res.status(403).json("You are not allowed to do that!");
+            res.status(403).json("verifyAndAdmin: Not allowed");
         }
     })
 };
