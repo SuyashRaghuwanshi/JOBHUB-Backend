@@ -13,7 +13,7 @@ module.exports = {
   //     const UpdatedUser = await User.findByIdAndUpdate(
   //       req.user.id,
   //       {
-  //         $set: req.body,
+          // $set: req.body,
   //       },
   //       { new: true }
   //     );
@@ -27,6 +27,9 @@ module.exports = {
   console.log("🚀 Reached updateUser controller");
   console.log("Body received:", req.body);
   console.log("User ID from token:", req.user.id);
+  if (req.body.profile) {
+    delete req.body.profile;
+  }
 
   if (req.body.password) {
     req.body.password = CryptoJS.AES.encrypt(

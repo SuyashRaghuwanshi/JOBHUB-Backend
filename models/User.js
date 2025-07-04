@@ -7,10 +7,10 @@ const UserSchema = new mongoose.Schema({
     isAdmin: {type: Boolean, default: false},
     isAgent: {type: Boolean, default: false},
     skills: {type: Array, default: false},
-    profile:{
-        type:String,
-        required: true,
-        default: "https://gratisography.com/photo/augmented-reality/"
-    }
+    // profile:{
+    //     type:String,
+    //     required: true,
+    //     default: "https://gratisography.com/photo/augmented-reality/"
+    // }
 });
 module.exports = mongoose.model("User", UserSchema);
