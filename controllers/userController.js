@@ -49,7 +49,7 @@ module.exports = {
       return res.status(404).json({ error: "User not found" });
     }
 
-    const { password, __v, createdAt, ...others } = UpdatedUser._doc;
+    const { password, __v,profile, createdAt, ...others } = UpdatedUser._doc;
     console.log("✅ Updated user:", others);
     res.status(200).json(others);
 
