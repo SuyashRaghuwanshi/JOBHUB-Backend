@@ -46,7 +46,7 @@ module.exports = {
                 process.env.JWT_SEC,
                 {expiresIn:"2d"}
                 );
-            const {password, __v,createdAt, ...others}=user._doc;
+            const {password, __v,createdAt,profile, ...others}=user._doc;
             res.status(200).json({...others, token});
         } catch (err) {
             res.status(500).json(err);
