@@ -6,6 +6,7 @@ const UserSchema = new mongoose.Schema({
     location:{type: String, required: false},
     isAdmin: {type: Boolean, default: false},
     isAgent: {type: Boolean, default: false},
+    phone:{type:String, required:true, unique:true},
     skills: {type: Array, default: false},
     // profile:{
     //     type:String,
