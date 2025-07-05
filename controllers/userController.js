@@ -38,10 +38,12 @@ module.exports = {
     ).toString();
   }
 
+  const updateData={ $set: req.body };
+  updateData.$unset={profile:""};
   try {
     const UpdatedUser = await User.findByIdAndUpdate(
       req.user.id,
-      { $set: req.body },
+      updateData,
       { new: true }
     );
 
@@ -72,7 +74,7 @@ module.exports = {
   getUser: async(req, res)=>{
     try{
       const user=await User.findById(req.user.id);
-      const {password, __v, createdAt, updateUser, ...userData}=user._doc;
+      const {password, __v, createdAt,profile, updateUser, ...userData}=user._doc;
       res.status(200).json(userData)
     }catch(err){
       res.status(500).json(err)
@@ -81,8 +83,12 @@ module.exports = {
 
   getAllUsers: async (req, res)=>{
     try{
-      const allUsers=await User.find();
-      res.status(200).json(allUsers)
+      const safeUsers = allUsers.map(user => {
+      const { password, __v, createdAt, profile, ...userData } = user._doc;
+      return userData;
+    });
+
+    res.status(200).json(safeUsers);
     }catch(err){
       res.status(500).json(err)
     }
