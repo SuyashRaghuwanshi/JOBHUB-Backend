@@ -26,7 +26,7 @@ module.exports = {
         });
         try {
             const savedUser = await newUser.save();
-            const { password, __v, createdAt, ...others } = savedUser._doc;
+            const {password, __v, createdAt, ...others } = savedUser._doc;
             res.status(201).json(others); // Optional: remove password from response
         } catch (err) {
             res.status(500).json({ error: "Failed to create user", details: err.message });

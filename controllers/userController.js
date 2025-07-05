@@ -25,8 +25,7 @@ module.exports = {
   // },
   updateUser: async (req, res) => {
   console.log("🚀 Reached updateUser controller");
-  console.log("Body received:", req.body);
-  console.log("User ID from token:", req.user.id);
+  console.log("Phone receiveed", req.body.phone);
   if (req.body.profile) {
     delete req.body.profile;
   }
@@ -61,7 +60,6 @@ module.exports = {
   }
 },
 
-
   deleteUser: async(req, res)=>{
     try{
       await User.findByIdAndDelete(req.user.id)
@@ -83,11 +81,11 @@ module.exports = {
 
   getAllUsers: async (req, res)=>{
     try{
+      const allUsers = await User.find();
       const safeUsers = allUsers.map(user => {
       const { password, __v, createdAt, profile, ...userData } = user._doc;
       return userData;
     });
-
     res.status(200).json(safeUsers);
     }catch(err){
       res.status(500).json(err)
