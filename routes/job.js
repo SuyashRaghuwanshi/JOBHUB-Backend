@@ -20,6 +20,4 @@ router.get("/", jobController.getAllJobs);
 // Search jobs
 router.get("/search/:key", jobController.searchJobs);
 
-
-
 module.exports = router

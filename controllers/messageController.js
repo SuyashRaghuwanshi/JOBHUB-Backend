@@ -18,7 +18,6 @@ module.exports = {
             .sort({createdAt: -1})//Sort messages by descending order
             .skip(skipMessages)//skip messages based on pagination
             .limit(pageSize);
-
             messages=await User.populate(messages,{
                 path:"chat.users",
                 select:"username profile email",

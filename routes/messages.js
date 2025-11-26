@@ -9,6 +9,4 @@ router.post("/",verifyAndAuthorization, messageController.sendMessage);
 // GET Messages
 router.get("/:id",verifyAndAuthorization, messageController.getAllMessage);
 
-
-
 module.exports = router

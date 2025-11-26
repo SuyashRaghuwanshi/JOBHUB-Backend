@@ -46,13 +46,13 @@ const io=require("socket.io")(server,{
       socket.to(room).emit('typing', room)
     });
 
-    socket.on('stop Typing',(room)=>{
+    socket.on('stop typing',(room)=>{
       console.log("Stop typing");
       console.log("room");
       socket.to(room).emit('stop typing', room)
     });
 
-    socket.on('joinchat',(room)=>{
+    socket.on('join chat',(room)=>{
       socket.join(room)
       console.log('User Joined:'+ room);
     });

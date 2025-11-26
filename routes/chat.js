@@ -9,6 +9,4 @@ router.post("/",verifyAndAuthorization, chatController.accessChat);
 // GET CHats
 router.get("/",verifyAndAuthorization, chatController.getChat);
 
-
-
 module.exports = router
